@@ -22,7 +22,7 @@ b. Taxonomies: material, applications and county
 
 ```php
 <?php
-$materiale = get_terms( array(
+$materials = get_terms( array(
   'taxonomy' => 'material',
   'hide_empty' => false,
 ));
