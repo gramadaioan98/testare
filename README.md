@@ -225,3 +225,28 @@ function misha_filter_function(){
 
 
 ```
+
+## And at the end, we reset the filters and the ajax response to return to the initial state
+
+```js
+$("#reset").click(function () {
+	window.history.pushState({}, document.title, "/");
+	$("input[name=set-material]:checked").prop("checked", false);
+	$("input[name=set-aplicatie]:checked").prop("checked", false);
+	$("select[name=county]").prop("selectedIndex", 0);
+	$.ajax({
+		url: "/wp-admin/admin-ajax.php",
+		dataType: "json", // form data
+		data: {
+			action: "myfilter"
+		},
+		type: "POST", // POST
+		complete: function (data) {
+			$("#response").html(data.responseText); // insert data
+
+			$(".grid-projects-test").addClass("hidden");
+		}
+	});
+	return false;
+});
+```
