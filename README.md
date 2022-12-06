@@ -58,7 +58,7 @@ $materiale = get_terms( array(
 
 ```
 <p align="center">
-![alt text](https://github.com/gramadaioan98/testare/blob/main/filters.jpg?raw=true)
+<img src="https://github.com/gramadaioan98/testare/blob/main/filters.jpg?raw=true"/>
 </p>
 ## Step 3. jQuery script to Send a Request and to Receive Result Data
 
