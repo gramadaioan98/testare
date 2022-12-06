@@ -252,3 +252,7 @@ $("#reset").click(function () {
 	return false;
 });
 ```
+## The final result:
+<p align="center">
+<img src="https://github.com/gramadaioan98/testare/blob/main/final-result.jpg?raw=true"/>
+</p>
