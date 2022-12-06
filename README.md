@@ -42,7 +42,7 @@ $materiale = get_terms( array(
         if($_GET["materials"]){  // if we find this taxonomy in the url parameters
           $materials_array = explode(",",$_GET["materials"][0]);
 
-          //We check if the taxonomies in the url are found among our inputs
+          // We check if the taxonomies in the url are found among our inputs
 
           for($i=0; $i< count($materials_array); $i++){
             if( $material->slug == $materials_array[$i]) {
@@ -70,7 +70,7 @@ I wrote comments in the code to follow each line step by step.
 
 ```js
 $(".set-filter").change(function () {
-	//If the value in the input or select changes
+	// If the value in the input or select changes
 	$(".remove-result-search").remove(); //Here the component that displays the message that nothing was found will be deleted.
 
 	var filters_materials = []; //At each input change, we initialize each array
@@ -84,7 +84,7 @@ $(".set-filter").change(function () {
 		url: "/wp-admin/admin-ajax.php",
 		dataType: "json", // form data
 
-		//We add additional data on request and the desired action, for us it is "myfilter"
+		// We add additional data on request and the desired action, for us it is "myfilter"
 		data: {
 			action: "myfilter",
 			materials: filters_materials
@@ -93,13 +93,13 @@ $(".set-filter").change(function () {
 		complete: function (data) {
 			$("#response").html(data.responseText); // insert data
 
-			//We delete the grid with the information that was displayed at the first rendering of the page
+			// We delete the grid with the information that was displayed at the first rendering of the page
 			$(".grid-projects-test").remove();
 		}
 	});
 	window.history.pushState({}, document.title, "/");
 
-	//We create a new URL and add the parameters we selected using inputs and select
+	// We create a new URL and add the parameters we selected using inputs and select
 	const url = new URL(window.location);
 
 	if (filters_materials != 0) {
@@ -127,11 +127,11 @@ function inntech_filter_function(){
     // We use the information sent with Ajax
     $materialsB = $_POST['materials'];
 
-    //We create an array of taxonomies
+    // We create an array of taxonomies
     $taxQuerry = array();
     $taxQuerry[] = array('relation' => 'AND');
 
-    //We check if there are taxonomies and add them to $taxQuerry
+    // We check if there are taxonomies and add them to $taxQuerry
     if($materialsB){
       $taxQuerry[] = array(
         'taxonomy'        => 'material',
