@@ -55,7 +55,7 @@ $materials = get_terms( array(
     <label class="cursor-pointer font-primary text-textGray" for="<?php echo $material->slug?>"><?php echo $material->name?></label>
   </div>
 <?php endforeach?>
-
+<div id="response"></div>
 ```
 
 <p align="center">
