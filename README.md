@@ -69,49 +69,47 @@ In this step, we learn how to take the value from an input/select and send the r
 I wrote comments in the code to follow each line step by step.
 
 ```js
-$(".set-filter")
-	.add("select[name=county]")
-	.change(function () {
-		//If the value in the input or select changes
-		$(".remove-result-search").remove(); //Here the component that displays the message that nothing was found will be deleted.
+$(".set-filter").change(function () {
+	//If the value in the input or select changes
+	$(".remove-result-search").remove(); //Here the component that displays the message that nothing was found will be deleted.
 
-		var filters_materials = []; //At each input change, we initialize each array
+	var filters_materials = []; //At each input change, we initialize each array
 
-		// We go through all the inputs, and if they are checked, we add them to the array
-		$("input[name=set-material]:checked").each(function (index, element) {
-			filters_materials.push(this.value);
-		});
-
-		$.ajax({
-			url: "/wp-admin/admin-ajax.php",
-			dataType: "json", // form data
-
-			//We add additional data on request and the desired action, for us it is "myfilter"
-			data: {
-				action: "myfilter",
-				materials: filters_materials
-			},
-			type: "POST", // POST
-			complete: function (data) {
-				$("#response").html(data.responseText); // insert data
-
-				//We delete the grid with the information that was displayed at the first rendering of the page
-				$(".grid-projects-test").remove();
-			}
-		});
-		window.history.pushState({}, document.title, "/");
-
-		//We create a new URL and add the parameters we selected using inputs and select
-		const url = new URL(window.location);
-
-		if (filters_materials != 0) {
-			url.searchParams.set("materials[]", [filters_materials]);
-		}
-
-		window.history.pushState({}, "", url);
-
-		return false;
+	// We go through all the inputs, and if they are checked, we add them to the array
+	$("input[name=set-material]:checked").each(function (index, element) {
+		filters_materials.push(this.value);
 	});
+
+	$.ajax({
+		url: "/wp-admin/admin-ajax.php",
+		dataType: "json", // form data
+
+		//We add additional data on request and the desired action, for us it is "myfilter"
+		data: {
+			action: "myfilter",
+			materials: filters_materials
+		},
+		type: "POST", // POST
+		complete: function (data) {
+			$("#response").html(data.responseText); // insert data
+
+			//We delete the grid with the information that was displayed at the first rendering of the page
+			$(".grid-projects-test").remove();
+		}
+	});
+	window.history.pushState({}, document.title, "/");
+
+	//We create a new URL and add the parameters we selected using inputs and select
+	const url = new URL(window.location);
+
+	if (filters_materials != 0) {
+		url.searchParams.set("materials[]", [filters_materials]);
+	}
+
+	window.history.pushState({}, "", url);
+
+	return false;
+});
 ```
 
 ## Step 4. PHP code to Process the Request
