@@ -155,6 +155,7 @@ function inntech_filter_function(){
 
     // Here we create the answer for display on the website
     while ( $my_posts->have_posts() ){
+
       $my_posts->the_post();
       $html_text .= "<a href='";
       $html_text .= get_the_permalink();
@@ -175,6 +176,7 @@ function inntech_filter_function(){
       $html_text .= "</div>";
       $html_text .= "<div class='group-hover:w-0 duration-200 absolute w-full h-full bg-black/50 top-0 left-0'></div>";
        $html_text .= "</a>";
+
     };
 
     $html_text .= "</div>";
@@ -187,9 +189,7 @@ function inntech_filter_function(){
     }
 
   echo $html_text;
-
 	die();
-
 }
 
 
