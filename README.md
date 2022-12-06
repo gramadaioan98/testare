@@ -201,8 +201,7 @@ function inntech_filter_function(){
 $("#reset").click(function () {
 	window.history.pushState({}, document.title, "/");
 	$("input[name=set-material]:checked").prop("checked", false);
-	$("input[name=set-aplicatie]:checked").prop("checked", false);
-	$("select[name=county]").prop("selectedIndex", 0);
+
 	$.ajax({
 		url: "/wp-admin/admin-ajax.php",
 		dataType: "json", // form data
