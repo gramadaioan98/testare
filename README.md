@@ -57,6 +57,7 @@ $materiale = get_terms( array(
 <?php endforeach?>
 
 ```
+![alt text](https://github.com/gramadaioan98/testare/blob/main/image.jpg?raw=true)
 
 ## Step 3. jQuery script to Send a Request and to Receive Result Data
 
