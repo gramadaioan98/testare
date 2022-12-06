@@ -57,8 +57,9 @@ $materiale = get_terms( array(
 <?php endforeach?>
 
 ```
+<p align="center">
 ![alt text](https://github.com/gramadaioan98/testare/blob/main/filters.jpg?raw=true)
-
+</p>
 ## Step 3. jQuery script to Send a Request and to Receive Result Data
 
 In this step, we learn how to take the value from an input/select and send the request to the form submission.
