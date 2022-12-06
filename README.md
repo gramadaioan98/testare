@@ -17,6 +17,7 @@ With the help of these ACF (Advanced Custom Fields) and CPT (Custom Post Type) m
 ## Step 1. We create the CPT with the necessary taxonomies and then drag them where we need them on the page.
 
 a. We created CPT for Projects.
+
 b. Taxonomies: material, applications and county
 
 ```php
