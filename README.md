@@ -57,6 +57,7 @@ $materiale = get_terms( array(
 <?php endforeach?>
 
 ```
+
 <p align="center">
 <img src="https://github.com/gramadaioan98/testare/blob/main/filters.jpg?raw=true"/>
 </p>
@@ -81,15 +82,6 @@ $(".set-filter")
 			filters_materials.push(this.value);
 		});
 
-		var filters_aplications = [];
-		$("input[name=set-aplicatie]:checked").each(function (index, element) {
-			filters_aplications.push(this.value);
-		});
-		var filters_county = "";
-
-		if ($("select[name=county]").val()) {
-			filters_county = $("select[name=county]").val();
-		}
 		$.ajax({
 			url: "/wp-admin/admin-ajax.php",
 			dataType: "json", // form data
@@ -97,9 +89,7 @@ $(".set-filter")
 			//We add additional data on request and the desired action, for us it is "myfilter"
 			data: {
 				action: "myfilter",
-				materials: filters_materials,
-				applicationsSet: filters_aplications,
-				countySet: filters_county
+				materials: filters_materials
 			},
 			type: "POST", // POST
 			complete: function (data) {
@@ -118,14 +108,6 @@ $(".set-filter")
 			url.searchParams.set("materials[]", [filters_materials]);
 		}
 
-		if (filters_aplications.length != 0) {
-			url.searchParams.set("applicationsSet[]", [filters_aplications]);
-		}
-
-		if (filters_county.length != 0) {
-			url.searchParams.set("countySet", filters_county);
-		}
-
 		window.history.pushState({}, "", url);
 
 		return false;
@@ -139,15 +121,13 @@ In this part, we decide how to filter posts. This code is fully based on WP_Quer
 ```php
 
 
-add_action('wp_ajax_myfilter', 'misha_filter_function'); // wp_ajax_{ACTION HERE}
-add_action('wp_ajax_nopriv_myfilter', 'misha_filter_function');
+add_action('wp_ajax_myfilter', 'inntech_filter_function'); // wp_ajax_{ACTION HERE}
+add_action('wp_ajax_nopriv_myfilter', 'inntech_filter_function');
 
-function misha_filter_function(){
+function inntech_filter_function(){
 
     // We use the information sent with Ajax
     $materialsB = $_POST['materials'];
-    $aplicationB = $_POST['applicationsSet'];
-    $countyB = $_POST['countySet'];
 
     //We create an array of taxonomies
     $taxQuerry = array();
@@ -155,41 +135,25 @@ function misha_filter_function(){
 
     //We check if there are taxonomies and add them to $taxQuerry
     if($materialsB){
-        $taxQuerry[] = array(
-          'taxonomy'        => 'material',
-              'field'           => 'slug',
-              'terms'           =>  $materialsB,
-          'operator'        => 'IN',
-        );
-      }
-      if($aplicationB){
-        $taxQuerry[] = array(
-          'taxonomy'        => 'applications',
-              'field'           => 'slug',
-              'terms'           =>  $aplicationB,
-          'operator'        => 'IN',
-        );
-      }
-      if($countyB ){
-        $taxQuerry[] = array(
-          'taxonomy'        => 'county',
-              'field'           => 'slug',
-              'terms'           =>  $countyB,
-          'operator'        => 'IN',
-        );
-      }
-
-        $args=array(
-          'post_type'      => 'project',
-          'post_status'    => 'publish',
-          'posts_per_page' => -1,
-          'orderby'        => 'title',
-          'order'          => 'ASC',
-          'tax_query' => $taxQuerry,
+      $taxQuerry[] = array(
+        'taxonomy'        => 'material',
+        'field'           => 'slug',
+        'terms'           =>  $materialsB,
+        'operator'        => 'IN',
       );
+    }
 
-    $my_posts =  new WP_Query ( $args );
-      $html_text = '<div id="grid-proiecte" class="grid grid-cols-1 lg:grid-cols-2 lg:grid-cols-3 gap-5">';
+    $args=array(
+      'post_type'      => 'project',
+      'post_status'    => 'publish',
+      'posts_per_page' => -1,
+      'orderby'        => 'title',
+      'order'          => 'ASC',
+      'tax_query' => $taxQuerry,
+    );
+
+    $my_posts = new WP_Query ( $args );
+    $html_text = '<div id="grid-proiecte" class="grid grid-cols-1 lg:grid-cols-2 lg:grid-cols-3 gap-5">';
 
     // Here we create the answer for display on the website
     while ( $my_posts->have_posts() ){
@@ -213,17 +177,21 @@ function misha_filter_function(){
       $html_text .= "</div>";
       $html_text .= "<div class='group-hover:w-0 duration-200 absolute w-full h-full bg-black/50 top-0 left-0'></div>";
        $html_text .= "</a>";
-
-};
+    };
 
     $html_text .= "</div>";
     // And if we don't find anything, we send an information box
     if ( !$my_posts->have_posts() ) {
-        $html_text = "<div class='flex justify-center flex-col items-center py-32 border-2 mt-10'><span class='font-primary font-bold text-center'>Your search has no results.</span>
+
+      $html_text = "<div class='flex justify-center flex-col items-center py-32 border-2 mt-10'><span class='font-primary font-bold text-center'>Your search has no results.</span>
       </div>";
+
     }
-    echo $html_text;
+
+  echo $html_text;
+
 	die();
+
 }
 
 
@@ -253,7 +221,9 @@ $("#reset").click(function () {
 	return false;
 });
 ```
+
 ## The final result:
+
 <p align="center">
 <img src="https://github.com/gramadaioan98/testare/blob/main/final-result.jpg?raw=true"/>
 </p>
